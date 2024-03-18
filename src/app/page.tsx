@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { ReloadIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
+import { Description } from "@radix-ui/react-toast";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ export default function Home() {
       });
       const data = await response.json();
       if (data.error) {
-        console.log(data.error);
+        console.log("this is",data.error);
         toast({
           variant: "destructive",
           title: data.error,
@@ -29,11 +30,12 @@ export default function Home() {
 
         return;
       }
-      console.log(data);
+    
       //show an link to the website, where they can check the transaction
       //show it inside the toast only and also on the main page
       toast({
-        title: data.message,
+        title: data.id,
+        description: data.url
       });
     } catch (error) {
       console.error("Error processing address:", error);
@@ -67,7 +69,7 @@ export default function Home() {
             value={solAmount}
             onChange={(event) => {
               const newValue = parseFloat(event.target.value);
-              console.log(newValue);
+  
               if (newValue >= 0) {
                 setSolAmount(newValue);
               } else {
