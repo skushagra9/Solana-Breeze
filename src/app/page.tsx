@@ -12,9 +12,11 @@ export default function Home() {
   const [text, setText] = useState("");
   const { toast } = useToast();
   const [solAmount, setSolAmount] = useState(1);
+  const [url,setUrl] = useState('')
 
   const handleSubmit = async () => {
     try {
+      setLoading(true)
       const response = await fetch("/api/process", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -30,15 +32,16 @@ export default function Home() {
 
         return;
       }
-    
-      //show an link to the website, where they can check the transaction
-      //show it inside the toast only and also on the main page
+      setUrl(data.url)
       toast({
-        title: data.id,
-        description: data.url
+        title: "Success",
+        description: data.id
       });
     } catch (error) {
       console.error("Error processing address:", error);
+    }
+    finally{
+      setLoading(false)
     }
   };
   return (
@@ -49,6 +52,9 @@ export default function Home() {
           Your Premier Destination for Exclusive Solana Airdrops!
         </span>
       </span>
+      {/* make all of this below - appear in a card component 
+      and implement zod validation
+      */}
       <div className="flex flex-col items-center justify-center w-full max-w-full p-4">
         <Input
           className="w-full lg:w-1/3 border-4 border-indigo-light shadow-sm placeholder:text-muted-foreground rounded-xl mb-4 overflow-hidden focus-visible:outline-none resize-none"
@@ -58,8 +64,8 @@ export default function Home() {
             setText(event.target.value);
           }}
         ></Input>
-        <div className="flex items-center mb-4">
-          <label className="font-medium text-md lg:p-2 mr-2">
+        <div className="flex justify-center mb-4 items-center">
+          <label className="font-medium text-center text-md lg:p-2 mr-2">
             Enter the amount of SOL you want to send:
           </label>
           <Input
@@ -79,8 +85,16 @@ export default function Home() {
           />
         </div>
         <Button className="font-bold" variant="default" onClick={handleSubmit}>
-          Submit
+          {loading ?  <ReloadIcon className="h-6 w-6 animate-spin mr-2" /> : 'Devnet'}
         </Button>
+        {url && (
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-600">URL:</p>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+              {url}
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

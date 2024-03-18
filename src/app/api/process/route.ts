@@ -16,19 +16,12 @@ export async function POST(request: Request, response: Response) {
         newaddress,
       solana * LAMPORTS_PER_SOL
     );
-    console.log(airdropSignature)
-    try {
-      const txId = airdropSignature;
-    //   console.log(`Airdrop Transaction Id: ${txId}`);
-    //   console.log(`https://explorer.solana.com/tx/${txId}?cluster=devnet`);
       return Response.json({
         message: "Success",
-        id: `Airdrop Transaction Id: ${txId}`,
-        url: `https://explorer.solana.com/tx/${txId}?cluster=devnet`,
+        id: `Airdrop Transaction Id: ${airdropSignature}`,
+        url: `https://explorer.solana.com/tx/${airdropSignature}?cluster=devnet`,
       });
-    } catch (err) {
-      return Response.json({ error: "err" });
-    }
+   
   } catch (error) {
     return Response.json({ error: 'error' });
   }
