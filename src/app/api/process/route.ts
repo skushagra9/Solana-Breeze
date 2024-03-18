@@ -4,8 +4,8 @@ export async function POST(request: Request, response: Response) {
      
         //check if address exists
        
-
-        if (addressExists) {
+        //addressExists
+        if (true) {
             //pass in the logic to give the sol tokens to the particular address
             return Response.json({ message: "Success" });
         } else {
