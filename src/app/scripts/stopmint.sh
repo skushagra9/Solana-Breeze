@@ -1,0 +1,1 @@
+spl-token authorize token-address mint --disable
