@@ -43,7 +43,7 @@ export default function Home() {
   };
   return (
     <div className="flex flex-col justify-center items-center p-4 md:p-8 mt-44">
-      <span className="font-heading font-bold flex flex-col justify-center items-center subpixel-antialiased font-semibold  text-6xl md:text-7xl p-4">
+      <span className="font-heading font-bold flex flex-col justify-center items-center subpixel-antialiased font-semibold text-4xl md:text-7xl p-4">
         Solana Breeze
         <span className="font-medium text-center subpixel-antialiased text-xl md:text-2xl p-2">
           Your Premier Destination for Exclusive Solana Airdrops!
