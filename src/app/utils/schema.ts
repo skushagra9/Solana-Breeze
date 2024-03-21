@@ -1,3 +1,3 @@
-import {z} from 'zod'
+import { z } from "zod";
 
-export const InputCheck = z.string().max(50)
+export const InputCheck = z.string().max(50);

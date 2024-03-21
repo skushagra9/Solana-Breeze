@@ -10,11 +10,11 @@ export default function Home() {
   const [text, setText] = useState("");
   const { toast } = useToast();
   const [solAmount, setSolAmount] = useState(1);
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState("");
 
   const handleSubmit = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await fetch("/api/process", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -30,16 +30,15 @@ export default function Home() {
 
         return;
       }
-      setUrl(data.url)
+      setUrl(data.url);
       toast({
         title: "Success",
-        description: data.id
+        description: data.id,
       });
     } catch (error) {
       console.error("Error processing address:", error);
-    }
-    finally {
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -83,11 +82,20 @@ export default function Home() {
           />
         </div>
         <Button className="font-bold" variant="default" onClick={handleSubmit}>
-          {loading ? <ReloadIcon className="h-6 w-6 animate-spin mr-2" /> : 'Devnet'}
+          {loading ? (
+            <ReloadIcon className="h-6 w-6 animate-spin mr-2" />
+          ) : (
+            "Devnet"
+          )}
         </Button>
         {url && (
           <div className="mt-4 text-center">
-            <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline"
+            >
               {url}
             </a>
           </div>
@@ -96,16 +104,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-//bulk sending to many addresses
-
-// for i in $(seq 3); do 
-//   SIGNER="signer-${i}.json"
-//   PUBKEY=$(solana-keygen pubkey "$SIGNER")
-//   spl-token transfer C1iPAct3bbXqpGL6BfYoA5gmwTV71yR3tDcvpZLDm5nq 5000 "$PUBKEY"
-// done
-
-
-//stop minting tokens
-
