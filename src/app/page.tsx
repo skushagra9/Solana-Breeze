@@ -1,18 +1,16 @@
 "use client";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
-import { Description } from "@radix-ui/react-toast";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
   const { toast } = useToast();
   const [solAmount, setSolAmount] = useState(1);
-  const [url,setUrl] = useState('')
+  const [url, setUrl] = useState('')
 
   const handleSubmit = async () => {
     try {
@@ -24,7 +22,7 @@ export default function Home() {
       });
       const data = await response.json();
       if (data.error) {
-        console.log("this is",data.error);
+        console.log("this is", data.error);
         toast({
           variant: "destructive",
           title: data.error,
@@ -40,7 +38,7 @@ export default function Home() {
     } catch (error) {
       console.error("Error processing address:", error);
     }
-    finally{
+    finally {
       setLoading(false)
     }
   };
@@ -75,7 +73,7 @@ export default function Home() {
             value={solAmount}
             onChange={(event) => {
               const newValue = parseFloat(event.target.value);
-  
+
               if (newValue >= 0) {
                 setSolAmount(newValue);
               } else {
@@ -85,11 +83,10 @@ export default function Home() {
           />
         </div>
         <Button className="font-bold" variant="default" onClick={handleSubmit}>
-          {loading ?  <ReloadIcon className="h-6 w-6 animate-spin mr-2" /> : 'Devnet'}
+          {loading ? <ReloadIcon className="h-6 w-6 animate-spin mr-2" /> : 'Devnet'}
         </Button>
         {url && (
           <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">URL:</p>
             <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
               {url}
             </a>
@@ -99,3 +96,16 @@ export default function Home() {
     </div>
   );
 }
+
+
+//bulk sending to many addresses
+
+// for i in $(seq 3); do 
+//   SIGNER="signer-${i}.json"
+//   PUBKEY=$(solana-keygen pubkey "$SIGNER")
+//   spl-token transfer C1iPAct3bbXqpGL6BfYoA5gmwTV71yR3tDcvpZLDm5nq 5000 "$PUBKEY"
+// done
+
+
+//stop minting tokens
+

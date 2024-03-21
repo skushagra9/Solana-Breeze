@@ -1,11 +1,12 @@
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { InputCheck } from "@/app/utils/schema";
 
 export async function POST(request: Request, response: Response) {
   const solanaConnection = new Connection("https://api.devnet.solana.com");
   try {
     const { address, solana } = await request.json();
-
-    const newaddress = new PublicKey(address)
+    const isAddress = InputCheck.parse(address)
+    const newaddress = new PublicKey(isAddress)
     const accountInfo = await solanaConnection.getAccountInfo(newaddress);
     console.log(accountInfo)
     if (!accountInfo) {
