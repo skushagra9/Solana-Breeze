@@ -7,16 +7,17 @@ export async function POST(request: Request, response: Response) {
     const { address, solana } = await request.json();
     const isAddress = InputCheck.parse(address);
     const newaddress = new PublicKey(isAddress);
+    const airdropSignature = await solanaConnection.requestAirdrop(
+      newaddress,
+      solana * LAMPORTS_PER_SOL
+    );
     const accountInfo = await solanaConnection.getAccountInfo(newaddress);
     console.log(accountInfo);
     if (!accountInfo) {
       return Response.json({ error: "Address does not exist" });
     }
 
-    const airdropSignature = await solanaConnection.requestAirdrop(
-      newaddress,
-      solana * LAMPORTS_PER_SOL
-    );
+    
     return Response.json({
       message: "Success",
       id: `Airdrop Transaction Id: ${airdropSignature}`,
