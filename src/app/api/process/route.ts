@@ -11,6 +11,7 @@ export async function POST(request: Request, response: Response) {
       newaddress,
       solana * LAMPORTS_PER_SOL
     );
+    await solanaConnection.confirmTransaction(airdropSignature);
     const accountInfo = await solanaConnection.getAccountInfo(newaddress);
     console.log(accountInfo);
     if (!accountInfo) {
